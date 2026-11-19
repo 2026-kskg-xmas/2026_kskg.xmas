@@ -3,335 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>聖誕祈福願望板 Christmas Wishboard</title>
-    <style>
-        :root {
-            --bg-gradient: linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #2d122d 100%);
-            --text-color: #f8f9fa;
-            --card-gold: #f4d35e;
-            --card-red: #e63946;
-            --primary-btn: #d4af37;
-            --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: var(--font-family);
-            background: var(--bg-gradient);
-            color: var(--text-color);
-            min-height: 100vh;
-        }
-
-        .site-header {
-            text-align: center;
-            padding: 2.5rem 1rem 1.5rem;
-        }
-
-        .site-header h1 {
-            font-size: 2.2rem;
-            color: #f4d35e;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 0 10px rgba(244, 211, 94, 0.4);
-        }
-
-        .site-header p {
-            color: #e0e1dd;
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .action-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-        }
-
-        .btn {
-            padding: 0.6rem 1.2rem;
-            font-size: 0.95rem;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: transform 0.2s, background-color 0.2s;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .primary-btn {
-            background-color: var(--primary-btn);
-            color: #1b263b;
-            font-weight: bold;
-        }
-
-        .admin-toggle-btn {
-            background-color: rgba(255, 255, 255, 0.15);
-            color: #f8f9fa;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .admin-panel {
-            background-color: rgba(0, 0, 0, 0.4);
-            border: 1px dashed var(--primary-btn);
-            max-width: 800px;
-            margin: 0 auto 2rem;
-            padding: 1rem;
-            border-radius: 12px;
-            text-align: center;
-        }
-
-        .filter-controls {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: 0.8rem;
-        }
-
-        .filter-btn {
-            background: transparent;
-            border: 1px solid #e0e1dd;
-            color: #e0e1dd;
-            padding: 0.4rem 0.8rem;
-            border-radius: 15px;
-            cursor: pointer;
-        }
-
-        .filter-btn.active {
-            background-color: var(--primary-btn);
-            color: #121212;
-            border-color: var(--primary-btn);
-        }
-
-        .board-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 1rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .wish-card {
-            background-color: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(8px);
-            border-radius: 12px;
-            padding: 1.2rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            border-left: 4px solid var(--primary-btn);
-        }
-
-        .wish-card.gold { border-left-color: var(--card-gold); }
-        .wish-card.red { border-left-color: var(--card-red); }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.8rem;
-        }
-
-        .author {
-            font-weight: bold;
-            color: #f4d35e;
-        }
-
-        .badge {
-            font-size: 0.75rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 10px;
-        }
-
-        .badge.approved { background-color: #2a9d8f; color: white; }
-        .badge.pending { background-color: #e76f51; color: white; }
-
-        .content {
-            font-size: 0.95rem;
-            line-height: 1.5;
-            color: #f8f9fa;
-            margin-bottom: 1rem;
-        }
-
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.8rem;
-            color: #a0aab2;
-        }
-
-        .delete-btn {
-            background-color: #e63946;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 0.2rem 0.5rem;
-            cursor: pointer;
-        }
-
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal-content {
-            background-color: #1b263b;
-            padding: 2rem;
-            border-radius: 16px;
-            width: 90%;
-            max-width: 450px;
-            position: relative;
-            border: 1px solid var(--primary-btn);
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 1rem;
-            right: 1.2rem;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #a0aab2;
-        }
-
-        .form-group {
-            margin-bottom: 1.2rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.4rem;
-            font-size: 0.9rem;
-        }
-
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 0.6rem;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background-color: rgba(255, 255, 255, 0.05);
-            color: white;
-            box-sizing: border-box;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-    </style>
+    <title>Hang a Wish on a Star</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header class="site-header">
-        <h1>🎄 聖誕願望祈福牆 🎄</h1>
-        <p>在這裡點亮點點星光，留下你最真摯的祝福與聖誕願望。</p>
-        <div class="action-buttons">
-            <button id="open-modal-btn" class="btn primary-btn">✨ 寫下願望</button>
-            <button id="toggle-admin-btn" class="btn admin-toggle-btn">🔒 管理員模式</button>
+    <!-- 純粹的深藍星夜背景 -->
+    <div class="starry-sky"></div>
+
+    <!-- 頂部大標題區 -->
+    <header class="hero-header">
+        <h1 class="main-title">Hang a Wish on a Star</h1>
+        
+        <!-- 工具列：搜尋框 + 寫下願望按鈕 -->
+        <div class="toolbar">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="🔍 搜尋暱稱或願望關鍵字...">
+            </div>
+            <button id="open-write-btn" class="star-btn">✨ 寫下願望</button>
         </div>
     </header>
 
-    <section id="admin-panel" class="admin-panel hidden">
-        <h2>🛡️ 後台管理篩選面板</h2>
-        <div class="filter-controls">
-            <button class="filter-btn active">全部留言</button>
-            <button class="filter-btn">待審核</button>
-            <button class="filter-btn">已發布</button>
-        </div>
-    </section>
+    <!-- 主要祈福牆：長線與木夾紙卡區（由 JS 動態生成） -->
+    <main id="wish-lines-container" class="wish-lines-container"></main>
 
-    <main class="board-container">
-        <div class="wish-card gold">
-            <div class="card-header">
-                <span class="author">小麥</span>
-                <span class="badge approved">已核准</span>
-            </div>
-            <p class="content">希望期末專題順利通過！祝大家聖誕快樂、心想事成！</p>
-            <div class="card-footer">
-                <span class="date">2026-12-24</span>
-                <button class="delete-btn admin-only hidden">🗑️ 刪除</button>
-            </div>
-        </div>
+    <!-- 分頁導覽列（由 JS 動態生成） -->
+    <nav id="pagination-bar" class="pagination-bar" aria-label="願望分頁"></nav>
 
-        <div class="wish-card red">
-            <div class="card-header">
-                <span class="author">神秘聖誕老人</span>
-                <span class="badge pending">待審核</span>
-            </div>
-            <p class="content">願天下的大家都能在這個冬夜裡感受到溫暖。 Merry Christmas!</p>
-            <div class="card-footer">
-                <span class="date">2026-12-25</span>
-                <button class="delete-btn admin-only hidden">🗑️ 刪除</button>
-            </div>
-        </div>
-    </main>
+    <!-- 網頁最下方：極簡管理員鎖頭圖示 -->
+    <footer class="site-footer">
+        <button id="admin-lock-btn" class="lock-icon-btn" aria-label="管理員模式">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+        </button>
+    </footer>
 
-    <div id="wish-modal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <span id="close-modal-btn" class="close-btn">&times;</span>
-            <h2>🎁 寫下你的聖誕祝福</h2>
+    <!-- 彈窗 1：寫下願望 -->
+    <div id="write-modal" class="modal-backdrop hidden">
+        <div class="modal-box">
+            <button id="close-write-btn" class="modal-close">&times;</button>
+            <h2>✨ 掛上你的星光願望</h2>
             <form id="wish-form">
-                <div class="form-group">
-                    <label for="user-name">你的暱稱或名字：</label>
-                    <input type="text" id="user-name" placeholder="例如：聖誕小精靈" required>
-                </div>
-                <div class="form-group">
-                    <label for="wish-text">祝福或願望：</label>
-                    <textarea id="wish-text" rows="4" placeholder="請輸入你想說的話..." required></textarea>
-                </div>
-                <button type="button" class="btn primary-btn submit-btn" onclick="document.getElementById('wish-modal').classList.add('hidden')">送出願望</button>
+                <input type="text" id="wish-author-input" placeholder="你的暱稱（若留白則為匿名星光）" maxlength="15">
+                <textarea id="wish-content-input" rows="4" placeholder="寫下你想說的話或祝福..." required maxlength="100"></textarea>
+                <button type="submit" class="star-btn full-width">夾上星夜長線</button>
             </form>
         </div>
     </div>
 
-    <script>
-        const openModalBtn = document.getElementById('open-modal-btn');
-        const closeModalBtn = document.getElementById('close-modal-btn');
-        const wishModal = document.getElementById('wish-modal');
+    <!-- 彈窗 2：管理員密碼驗證 -->
+    <div id="admin-modal" class="modal-backdrop hidden">
+        <div class="modal-box small-box">
+            <button id="close-admin-btn" class="modal-close">&times;</button>
+            <h3>🔒 管理員驗證</h3>
+            <form id="admin-login-form">
+                <input type="password" id="admin-pwd-input" placeholder="請輸入管理員密碼" required>
+                <p id="pwd-error-msg" class="error-text hidden">密碼錯誤，請再試一次</p>
+                <button type="submit" class="star-btn full-width">確認解鎖</button>
+            </form>
+        </div>
+    </div>
 
-        const toggleAdminBtn = document.getElementById('toggle-admin-btn');
-        const adminPanel = document.getElementById('admin-panel');
-        const adminOnlyButtons = document.querySelectorAll('.admin-only');
+    <!-- 彈窗 3：管理員編輯留言 -->
+    <div id="edit-modal" class="modal-backdrop hidden">
+        <div class="modal-box">
+            <button id="close-edit-btn" class="modal-close">&times;</button>
+            <h2>✏️ 編輯願望內容</h2>
+            <form id="edit-form">
+                <input type="text" id="edit-author-input" placeholder="暱稱" maxlength="15" required>
+                <textarea id="edit-content-input" rows="4" placeholder="願望內容..." required maxlength="100"></textarea>
+                <button type="submit" class="star-btn full-width">儲存修改</button>
+            </form>
+        </div>
+    </div>
 
-        openModalBtn.addEventListener('click', () => {
-            wishModal.classList.remove('hidden');
-        });
-
-        closeModalBtn.addEventListener('click', () => {
-            wishModal.classList.add('hidden');
-        });
-
-        wishModal.addEventListener('click', (event) => {
-            if (event.target === wishModal) {
-                wishModal.classList.add('hidden');
-            }
-        });
-
-        let isAdmin = false;
-
-        toggleAdminBtn.addEventListener('click', () => {
-            isAdmin = !isAdmin;
-
-            if (isAdmin) {
-                adminPanel.classList.remove('hidden');
-                toggleAdminBtn.innerText = "🔓 退出管理模式";
-                adminOnlyButtons.forEach(btn => btn.classList.remove('hidden'));
-            } else {
-                adminPanel.classList.add('hidden');
-                toggleAdminBtn.innerText = "🔒 管理員模式";
-                adminOnlyButtons.forEach(btn => btn.classList.add('hidden'));
-            }
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
