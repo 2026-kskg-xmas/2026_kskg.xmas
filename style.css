@@ -1,231 +1,380 @@
-/* 基礎設定與變數 */
-:root {
-    --bg-gradient: linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #2d122d 100%);
-    --text-color: #f8f9fa;
-    --card-gold: #f4d35e;
-    --card-red: #e63946;
-    --primary-btn: #d4af37;
-    --font-family: system-ui, -apple-system, sans-serif;
+/* 全局與星夜背景設定 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    font-family: var(--font-family);
-    background: var(--bg-gradient);
-    color: var(--text-color);
+    font-family: "Georgia", "Noto Serif TC", serif;
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    color: #f4f1ea;
     min-height: 100vh;
-}
-
-/* 頁首樣式 */
-.site-header {
-    text-align: center;
-    padding: 2.5rem 1rem 1.5rem;
-}
-
-.site-header h1 {
-    font-size: 2.2rem;
-    color: #f4d35e;
-    margin-bottom: 0.5rem;
-    text-shadow: 0 0 10px rgba(244, 211, 94, 0.4);
-}
-
-.site-header p {
-    color: #e0e1dd;
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-.action-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-}
-
-/* 按鈕風格 */
-.btn {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.95rem;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: transform 0.2s, background-color 0.2s;
-}
-
-.btn:hover {
-    transform: translateY(-2px);
-}
-
-.primary-btn {
-    background-color: var(--primary-btn);
-    color: #1b263b;
-    font-weight: bold;
-}
-
-.admin-toggle-btn {
-    background-color: rgba(255, 255, 255, 0.15);
-    color: #f8f9fa;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-/* 後台管理面板 */
-.admin-panel {
-    background-color: rgba(0, 0, 0, 0.4);
-    border: 1px dashed var(--primary-btn);
-    max-width: 800px;
-    margin: 0 auto 2rem;
-    padding: 1rem;
-    border-radius: 12px;
-    text-align: center;
-}
-
-.filter-controls {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 0.8rem;
-}
-
-.filter-btn {
-    background: transparent;
-    border: 1px solid #e0e1dd;
-    color: #e0e1dd;
-    padding: 0.4rem 0.8rem;
-    border-radius: 15px;
-    cursor: pointer;
-}
-
-.filter-btn.active {
-    background-color: var(--primary-btn);
-    color: #121212;
-    border-color: var(--primary-btn);
-}
-
-/* 願望牆網格佈局 */
-.board-container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 1rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1.5rem;
-}
-
-/* 願望卡片 */
-.wish-card {
-    background-color: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(8px);
-    border-radius: 12px;
-    padding: 1.2rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    border-left: 4px solid var(--primary-btn);
+    overflow-x: hidden;
+    position: relative;
 }
 
-.wish-card.gold { border-left-color: var(--card-gold); }
-.wish-card.red { border-left-color: var(--card-red); }
-
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.8rem;
-}
-
-.author {
-    font-weight: bold;
-    color: #f4d35e;
-}
-
-.badge {
-    font-size: 0.75rem;
-    padding: 0.2rem 0.5rem;
-    border-radius: 10px;
-}
-
-.badge.approved { background-color: #2a9d8f; color: white; }
-.badge.pending { background-color: #e76f51; color: white; }
-
-.content {
-    font-size: 0.95rem;
-    line-height: 1.5;
-    color: #f8f9fa;
-    margin-bottom: 1rem;
-}
-
-.card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.8rem;
-    color: #a0aab2;
-}
-
-.delete-btn {
-    background-color: #e63946;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 0.2rem 0.5rem;
-    cursor: pointer;
-}
-
-/* 彈窗 Modal */
-.modal-overlay {
+/* 純 CSS 繪製的背景星星點綴 */
+.starry-sky {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+    z-index: 0;
+    background-image: 
+        radial-gradient(1.5px 1.5px at 15% 20%, #ffffff, transparent),
+        radial-gradient(2px 2px at 35% 10%, #ffe8a3, transparent),
+        radial-gradient(1px 1px at 55% 25%, #ffffff, transparent),
+        radial-gradient(2px 2px at 78% 15%, #ffffff, transparent),
+        radial-gradient(1.5px 1.5px at 88% 35%, #ffe8a3, transparent),
+        radial-gradient(1px 1px at 22% 55%, #ffffff, transparent),
+        radial-gradient(2px 2px at 48% 65%, #ffffff, transparent),
+        radial-gradient(1.5px 1.5px at 72% 75%, #ffe8a3, transparent),
+        radial-gradient(1px 1px at 90% 80%, #ffffff, transparent),
+        radial-gradient(1.5px 1.5px at 10% 85%, #ffffff, transparent);
+    background-size: 550px 550px;
+    opacity: 0.85;
+}
+
+/* 頂部標題區 */
+.hero-header {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 3.5rem 1rem 2rem;
+}
+
+.main-title {
+    font-size: 3.2rem;
+    font-weight: normal;
+    letter-spacing: 2px;
+    color: #fdf6e3;
+    text-shadow: 0 0 18px rgba(255, 232, 163, 0.55);
+    margin-bottom: 1.5rem;
+}
+
+/* 搜尋框與寫願望按鈕列 */
+.toolbar {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
-.modal-content {
-    background-color: #1b263b;
-    padding: 2rem;
-    border-radius: 16px;
-    width: 90%;
-    max-width: 450px;
-    position: relative;
-    border: 1px solid var(--primary-btn);
-}
-
-.close-btn {
-    position: absolute;
-    top: 1rem;
-    right: 1.2rem;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: #a0aab2;
-}
-
-.form-group {
-    margin-bottom: 1.2rem;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.4rem;
+.search-box input {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 232, 163, 0.3);
+    border-radius: 20px;
+    padding: 0.55rem 1.2rem;
+    color: #fff;
     font-size: 0.9rem;
+    width: 240px;
+    outline: none;
+    transition: border-color 0.3s, background 0.3s;
 }
 
-.form-group input, .form-group textarea {
+.search-box input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.search-box input:focus {
+    border-color: #ffe8a3;
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.star-btn {
+    background: rgba(255, 232, 163, 0.15);
+    border: 1px solid #ffe8a3;
+    color: #ffe8a3;
+    padding: 0.55rem 1.3rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+.star-btn:hover {
+    background: #ffe8a3;
+    color: #0d1b2a;
+    box-shadow: 0 0 12px rgba(255, 232, 163, 0.6);
+}
+
+/* 祈福長線容器 */
+.wish-lines-container {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3.5rem;
+    padding: 1.5rem 0 3rem;
+}
+
+.empty-message {
+    text-align: center;
+    color: rgba(255, 232, 163, 0.7);
+    font-size: 1.1rem;
+    padding: 3rem 1rem;
+}
+
+/* 單條繩線與紙卡列 */
+.rope-row {
+    position: relative;
     width: 100%;
-    padding: 0.6rem;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background-color: rgba(255, 255, 255, 0.05);
-    color: white;
-    box-sizing: border-box;
+    padding-top: 14px;
 }
 
-/* 工具類：控制隱藏與顯示 */
+.rope-line {
+    position: absolute;
+    top: 14px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(212, 185, 130, 0.6) 15%, rgba(212, 185, 130, 0.8) 50%, rgba(212, 185, 130, 0.6) 85%, transparent);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.cards-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* 紙卡本體 */
+@keyframes fadeInCard {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.paper-card {
+    position: relative;
+    width: 220px;
+    min-height: 155px;
+    background-color: #f7f1e3;
+    color: #2c2c2c;
+    padding: 1.7rem 1.2rem 1.2rem;
+    border-radius: 3px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease;
+    animation: fadeInCard 0.35s ease;
+}
+
+.paper-card.tilt-left { transform: rotate(-2.5deg); }
+.paper-card.tilt-right { transform: rotate(2.5deg); }
+
+.paper-card:hover {
+    transform: rotate(0deg) scale(1.04);
+    z-index: 5;
+}
+
+/* 小木夾 */
+.wooden-clip {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 24px;
+    background: linear-gradient(90deg, #b07d4f, #cfa072, #9c6b3e);
+    border-radius: 2px;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.wish-content {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    word-break: break-word;
+}
+
+.wish-author {
+    font-size: 0.8rem;
+    color: #666;
+    text-align: right;
+    font-style: italic;
+}
+
+/* 管理員操作按鈕群（編輯 + 刪除） */
+.admin-actions {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    display: flex;
+    gap: 4px;
+}
+
+.admin-action-btn {
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s;
+}
+
+.admin-action-btn:hover {
+    transform: scale(1.15);
+}
+
+.edit-btn {
+    background: #3b82f6;
+}
+
+.delete-btn {
+    background: #d9534f;
+}
+
+/* 分頁導覽列 */
+.pagination-bar {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    min-height: 32px;
+}
+
+.page-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #e0e1dd;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+}
+
+.page-btn:hover:not(:disabled),
+.page-btn.active {
+    border-color: #ffe8a3;
+    color: #0d1b2a;
+    background: #ffe8a3;
+}
+
+.page-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* 網頁最下方：極小鎖頭按鈕 */
+.site-footer {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 1rem 0 1.5rem;
+}
+
+.lock-icon-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 232, 163, 0.35);
+    cursor: pointer;
+    padding: 6px;
+    transition: color 0.3s, transform 0.2s;
+}
+
+.lock-icon-btn:hover {
+    color: rgba(255, 232, 163, 0.9);
+    transform: scale(1.15);
+}
+
+.lock-icon-btn.unlocked {
+    color: #ff6b6b;
+}
+
+/* 彈窗樣式 */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(5, 8, 15, 0.75);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.modal-box {
+    background: #162232;
+    border: 1px solid rgba(255, 232, 163, 0.4);
+    border-radius: 12px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    text-align: center;
+}
+
+.modal-box.small-box {
+    max-width: 300px;
+}
+
+.modal-box h2, .modal-box h3 {
+    color: #ffe8a3;
+    margin-bottom: 1.2rem;
+    font-weight: normal;
+}
+
+.modal-box input, .modal-box textarea {
+    width: 100%;
+    padding: 0.7rem;
+    margin-bottom: 1rem;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    font-family: inherit;
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.error-text {
+    color: #ff6b6b;
+    font-size: 0.85rem;
+    margin-bottom: 0.8rem;
+}
+
 .hidden {
     display: none !important;
 }
