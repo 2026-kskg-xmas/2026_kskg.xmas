@@ -37,7 +37,7 @@ const db = getFirestore(app);
 const wishesCollection = collection(db, "wishes");
 
 // === 2. 狀態變數設定 ===
-const ADMIN_PASSWORD = "1234"; // 管理員密碼（可自行修改）
+const ADMIN_PASSWORD = "676767"; // 管理員密碼（可自行修改）
 const ITEMS_PER_PAGE = 6;      // 每頁顯示 6 張紙卡（2 條長線 × 每條 3 張）
 
 let wishes = [];
