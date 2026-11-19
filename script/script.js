@@ -18,7 +18,7 @@ const DEFAULT_WISHES = [
 
 // === 2. 狀態變數設定 ===
 const STORAGE_KEY = "hang_a_wish_data_v1";
-const ADMIN_PASSWORD = "1234"; // 管理員密碼
+const ADMIN_PASSWORD = "67676767"; // 管理員密碼
 const ITEMS_PER_PAGE = 6;      // 每頁顯示 6 張紙卡（分為 2 條線，每條 3 張）
 
 let wishes = loadWishes();
